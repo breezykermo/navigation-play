@@ -1,34 +1,19 @@
-import React from 'react'
-import {
-  View,
-  Image,
-  Text,
-} from 'react-native'
-import styles from './App.styles.js'
-import Topbar from '../../components/Topbar'
+import { Platform } from 'react-native'
+import { StackNavigator } from 'react-navigation'
+import HomeScreen from './HomeScreen'
+import ChatScreen from './ChatScreen'
 
-export default () => (
-  <View style={styles.container}>
-    <Topbar />
-    <Image 
-      style={{
-        width: 350,
-        height: 200,
-        paddingTop: 0,
-        marginTop: 0
-      }}
-      resizeMode={"cover"}
-      source={{uri:'https://unsplash.it/600/400/?random'}}
-    />
-    <Text
-      style={{
-        color: 'black',
-        fontSize: 24,
-        fontWeight: 'normal',
-        fontFamily: 'Helvetica Neue',
-        textAlign: 'center'
-      }}>
-      Welcome to this React Native Redux boiler.
-    </Text>
-  </View>
-)
+const App = StackNavigator({
+  Home: { screen: HomeScreen },
+  Chat: {
+    screen: ChatScreen,
+    path: 'chat/user:'
+  }
+}, {
+  containerOptions: {
+    // on Android, the URI prefix typically contains a host in addition to the scheme
+    URIPrefix: Platform.OS === 'android' ? 'mychat://mychat/' : 'mychat://'
+  }
+})
+
+export default App
